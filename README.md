@@ -1,0 +1,4 @@
+bones
+=====
+
+Skeleton for site
