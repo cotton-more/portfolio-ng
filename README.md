@@ -1,4 +1,0 @@
-bones
-=====
-
-Skeleton for site
