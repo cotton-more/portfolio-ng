@@ -17,12 +17,12 @@ angular.module('portfolioNgApp')
     ]
 
 angular.module('portfolioNgApp')
-    .directive 'niMenuItem', ['$compile', ($compile) ->
+    .directive 'niMenuItem', ['$compile', '$location', ($compile, $location) ->
         niMenuItem =
             restrict: 'E'
             template: """
                 <li>
-                    <span>{{item.name}}</span>
+                    <a ng-href="#!/card/{{item.id}}">{{item.name}}</a>
                 </li>
             """
             link: (scope, elm, attrs) ->

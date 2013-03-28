@@ -1,14 +1,15 @@
 'use strict'
 
-PortfolioCtrl = ($scope, Menu) ->
-    #$scope.tree = Menu.items
-    $scope.tree = [
-        {name: 'test', children: []}
-        {name: 'foo', children: []}
-    ]
-
-    console.log $scope.tree
+MenuCtrl = ($scope, Menu) ->
+    $scope.tree = Menu.items
     1
 
-PortfolioCtrl.$inject = ['$scope', 'Menu']
-angular.module('portfolioNgApp').controller 'PortfolioCtrl', PortfolioCtrl
+MenuCtrl.$inject = ['$scope', 'Menu']
+angular.module('portfolioNgApp').controller 'MenuCtrl', MenuCtrl
+
+CardCtrl = ($scope) ->
+    console.log 'test'
+    1
+
+CardCtrl.$inject = ['$scope']
+angular.module('portfolioNgApp').controller 'CardCtrl', CardCtrl

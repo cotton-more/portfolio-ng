@@ -2,11 +2,14 @@
 
 angular.module('portfolioNgApp', ['ngResource'])
     .config ['$routeProvider', '$locationProvider', ($route, $location) ->
-        $location.html5Mode(on).hashPrefix('!')
         $route
-            .when '/portfolio',
-                templateUrl: 'views/portfolio.html'
-                controller: 'PortfolioCtrl'
+            .when '/',
+                templateUrl: '/views/index.html'
+            .when '/card/:menuId',
+                templateUrl: '/views/card.html'
+                controller: 'CardCtrl'
             .otherwise
-                redirectTo: '/portfolio'
+                redirectTo: '/'
+
+        $location.html5Mode(off).hashPrefix('!')
     ]

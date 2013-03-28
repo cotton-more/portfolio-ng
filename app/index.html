@@ -37,7 +37,14 @@
         </div>
     </div>
 
-    <div class="container" ng-view></div>
+    <div class="container">
+        <div class="row">
+            <div class="span8" ng-view></div>
+            <div class="span4" ng-controller="MenuCtrl">
+                <ni-menu ng-model="tree"></ni-menu>
+            </div>
+        </div>
+    </div>
 
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-resource/angular-resource.js"></script>
