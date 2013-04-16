@@ -6,28 +6,32 @@ angular.module('portfolioNgApp')
         niMenu = 
             template: """
                 <ul>
-                    <ni-menu-item ng-repeat="item in tree"></ni-menu-item>
+                    <li data-ng-repeat="item in tree">
+                        <!-- directive: ni-menu-item -->
+                    </li>
                 </ul>
             """
             replace: true
             transclude: true
-            restrict: 'E'
+            restrict: 'M'
             scope:
-                tree: '=ngModel'
+                tree: '=niMenu'
     ]
 
 angular.module('portfolioNgApp')
     .directive 'niMenuItem', ['$compile', '$location', ($compile, $location) ->
         niMenuItem =
-            restrict: 'E'
             template: """
-                <li>
+                <span>
                     <a ng-href="#!/card/{{item.id}}">{{item.name}}</a>
-                </li>
+                </span>
             """
+            replace: true
+            transclude: true
+            restrict: 'M'
             link: (scope, elm, attrs) ->
                 if scope.item.children.length
-                    childItem = $compile('<ni-menu ng-model="item.children"></ni-menu>')(scope)
+                    childItem = $compile('<!-- directive: ni-menu item.children -->')(scope)
                     elm.append childItem
                 1
     ]

@@ -5,7 +5,7 @@ angular.module('portfolioNgApp', ['ngResource'])
         $route
             .when '/',
                 templateUrl: '/views/index.html'
-            .when '/card/:menuId',
+            .when '/cards/:menuId',
                 templateUrl: '/views/card.html'
                 controller: 'CardCtrl'
             .otherwise
