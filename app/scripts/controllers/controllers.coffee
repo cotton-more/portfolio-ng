@@ -7,9 +7,9 @@ MenuCtrl = ($scope, Menu) ->
 MenuCtrl.$inject = ['$scope', 'Menu']
 angular.module('portfolioNgApp').controller 'MenuCtrl', MenuCtrl
 
-CardCtrl = ($scope) ->
-    console.log 'test'
+CardListCtrl = ($scope, $routeParams, Menu) ->
+    $scope.cards = Menu.getCards($routeParams.menuId)
     1
 
-CardCtrl.$inject = ['$scope']
-angular.module('portfolioNgApp').controller 'CardCtrl', CardCtrl
+CardListCtrl.$inject = ['$scope', '$routeParams', 'Menu']
+angular.module('portfolioNgApp').controller 'CardListCtrl', CardListCtrl

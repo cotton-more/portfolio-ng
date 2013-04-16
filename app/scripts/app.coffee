@@ -7,7 +7,7 @@ angular.module('portfolioNgApp', ['ngResource'])
                 templateUrl: '/views/index.html'
             .when '/cards/:menuId',
                 templateUrl: '/views/card.html'
-                controller: 'CardCtrl'
+                controller: 'CardListCtrl'
             .otherwise
                 redirectTo: '/'
 

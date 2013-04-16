@@ -30,7 +30,7 @@ plugin = sqlalchemy.Plugin(
 app = Bottle()
 app.install(plugin)
 
-@app.route('/menu/get_cards/:id')
+@app.route('/get_cards/:id')
 def menu_get_cards(id, db):
     q = db.query(Card).filter(Card.menu_id==id)
     callback = request.query.callback
@@ -44,7 +44,7 @@ def menu_list(db):
     Return json representation of data
     """
     callback = request.query.callback
-    q = db.query(Menu)
+    q = db.query(Menu).order_by(Menu.id)
 
     response.content_type = 'text/javascript'
     return "%s(%s)" % (callback, jsonify([e.json() for e in q.all()]))

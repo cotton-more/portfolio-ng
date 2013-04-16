@@ -1,7 +1,22 @@
 'use strict'
 
 angular.module('portfolioNgApp')
-    .directive 'niMenu', [()->
+    .directive 'niCard', [ ->
+        niCard =
+            restrict: 'M'
+            replace: true
+            transclude: true
+            template: """
+                <div>
+                    <h3>{{card.name}}</h3>
+                    <div ng-show="card.about">{{card.about}}</div>
+                </div>
+            """
+        niCard
+    ]
+
+angular.module('portfolioNgApp')
+    .directive 'niMenu', [ ->
         console.log 'niMenu', @
         niMenu = 
             template: """
@@ -23,7 +38,8 @@ angular.module('portfolioNgApp')
         niMenuItem =
             template: """
                 <span>
-                    <a ng-href="#!/card/{{item.id}}">{{item.name}}</a>
+                    <a ng-href="#!/cards/{{item.id}}">{{item.name}}</a>
+                    <span class="btn btn-mini"><i class="icon-edit"></span>
                 </span>
             """
             replace: true

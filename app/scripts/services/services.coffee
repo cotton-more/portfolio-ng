@@ -42,5 +42,12 @@ angular.module('portfolioNgApp')
 
         getItems()
 
+        @getCards = (menuId) -> 
+            $resource(
+                'http://localhost\\:8000/get_cards/:menuId',
+                {callback: 'JSON_CALLBACK'},
+                query: {method: 'JSONP', isArray: true}
+            ).query {menuId: menuId}
+        
         @
     ]
