@@ -44,10 +44,24 @@ def menu_list(db):
     Return json representation of data
     """
     callback = request.query.callback
-    q = db.query(Menu).order_by(Menu.id)
+    q = db.query(Menu).order_by(Menu.parent_id)
 
     response.content_type = 'text/javascript'
-    return "%s(%s)" % (callback, jsonify([e.json() for e in q.all()]))
+    menu = [e.json() for e in q.all()]
+
+    #from random import shuffle
+    #shuffle(menu)
+
+    return "%s(%s)" % (callback, jsonify(menu))
+
+@app.route('/menu/:id')
+def get_menu(id, db):
+    callback = request.query.callback
+    e = db.query(Menu).get(id)
+
+    response.content_type = 'text/javascript'
+    return "%s(%s)" % (callback, jsonify(e.json()))
+
 
 # run application
 app.run(port=8000, reloader=True, debug=True)

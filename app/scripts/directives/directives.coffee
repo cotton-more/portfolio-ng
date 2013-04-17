@@ -17,10 +17,9 @@ angular.module('portfolioNgApp')
 
 angular.module('portfolioNgApp')
     .directive 'niMenu', [ ->
-        console.log 'niMenu', @
-        niMenu = 
+        niMenu =
             template: """
-                <ul>
+                <ul class="unstyled">
                     <li data-ng-repeat="item in tree">
                         <!-- directive: ni-menu-item -->
                     </li>
@@ -29,6 +28,10 @@ angular.module('portfolioNgApp')
             replace: true
             transclude: true
             restrict: 'M'
+            link: (scope, iElem, iAttr, ctrl)->
+                angular.forEach scope.tree, (item) ->
+                    if item.parent_id
+                        iElem.removeClass 'unstyled'
             scope:
                 tree: '=niMenu'
     ]
@@ -38,8 +41,8 @@ angular.module('portfolioNgApp')
         niMenuItem =
             template: """
                 <span>
-                    <a ng-href="#!/cards/{{item.id}}">{{item.name}}</a>
-                    <span class="btn btn-mini"><i class="icon-edit"></span>
+                    <a id="test-{{item.id}}" ng-href="#!/menu/{{item.id}}/cards" ng-bind="item.name"></a>
+                    <a ng-href="#!/menu/{{item.id}}/edit" class="btn btn-mini"><i class="icon-edit"></i> edit</a>
                 </span>
             """
             replace: true

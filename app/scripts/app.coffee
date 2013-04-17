@@ -5,8 +5,11 @@ angular.module('portfolioNgApp', ['ngResource'])
         $route
             .when '/',
                 templateUrl: '/views/index.html'
-            .when '/cards/:menuId',
-                templateUrl: '/views/card.html'
+            .when '/menu/:menuId/edit',
+                templateUrl: '/views/menu_edit.html'
+                controller: 'MenuEditCtrl'
+            .when '/menu/:menuId/cards',
+                templateUrl: '/views/menu_cards.html'
                 controller: 'CardListCtrl'
             .otherwise
                 redirectTo: '/'
