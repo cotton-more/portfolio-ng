@@ -37,20 +37,24 @@ angular.module('portfolioNgApp')
     ]
 
 angular.module('portfolioNgApp')
-    .directive 'niMenuItem', ['$compile', '$location', ($compile, $location) ->
+    .directive 'niMenuItem', ['$compile', 'Menu', ($compile, Menu) ->
+        selectMenuElement = (item) ->
+            Menu.currentMenu = item
+
         niMenuItem =
             template: """
                 <span>
-                    <a id="test-{{item.id}}" ng-href="#!/menu/{{item.id}}/cards" ng-bind="item.name"></a>
-                    <a ng-href="#!/menu/{{item.id}}/edit" class="btn btn-mini"><i class="icon-edit"></i> edit</a>
+                    <a ng-click="select(item)" id="test-{{item.id}}" ng-href="#!/menu/{{item.id}}/cards" ng-bind="item.name"></a>
                 </span>
             """
             replace: true
             transclude: true
             restrict: 'M'
-            link: (scope, elm, attrs) ->
-                if scope.item.children.length
-                    childItem = $compile('<!-- directive: ni-menu item.children -->')(scope)
+            link: ($scope, elm, attrs, ctrl) ->
+                $scope.select = selectMenuElement
+
+                if $scope.item.children.length
+                    childItem = $compile('<!-- directive: ni-menu item.children -->')($scope)
                     elm.append childItem
                 1
     ]
