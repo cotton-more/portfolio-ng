@@ -23,7 +23,11 @@ module.exports = function (grunt) {
     watch: {
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['clean:server', 'coffee:dist']
+        tasks: ['clean:serverScripts', 'coffee:dist']
+      },
+      less: {
+          files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
+          tasks: ['clean:serverStyles','less:development']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.coffee'],
@@ -74,6 +78,8 @@ module.exports = function (grunt) {
     },
     clean: {
       dist: ['.tmp', '<%= yeoman.dist %>/*'],
+      serverScripts: '.tmp/scripts',
+      serverStyles: '.tmp/styles',
       server: '.tmp'
     },
     jshint: {
@@ -106,6 +112,16 @@ module.exports = function (grunt) {
         dest: 'test/spec',
         ext: '.js'
       }
+    },
+    less: {
+        development: {
+            options: {
+                paths: ['<%= yeoman.app %>/styles']
+            },
+            files: {
+                '.tmp/styles/styles.css': 'app/styles/styles.less'
+            }
+        }
     },
     /*
      *concat: {
@@ -221,6 +237,7 @@ module.exports = function (grunt) {
   grunt.registerTask('server', [
     'clean:server',
     'coffee:dist',
+    'less:development',
     'livereload-start',
     'connect:livereload',
     'open',
@@ -239,6 +256,7 @@ module.exports = function (grunt) {
     'jshint',
     'test',
     'coffee',
+    'less',
     'useminPrepare',
     'imagemin',
     'cssmin',
