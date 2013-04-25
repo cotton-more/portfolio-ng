@@ -23,6 +23,24 @@ angular.module('portfolioNgApp').controller 'MenuEditCtrl', MenuEditCtrl
 CardListCtrl = ($scope, $routeParams, Menu) ->
     menuId = parseInt $routeParams.menuId, 10
 
+    editMode = false
+    localMenu = undefined
+
+    $scope.isInEditMode = ->
+        editMode
+
+    $scope.editMode = () ->
+        editMode = on
+        localMenu = angular.copy $scope.menu
+
+    $scope.viewMode = ->
+        angular.copy localMenu, $scope.menu
+        editMode = off
+        localMenu = undefined
+
+    $scope.save = (menu) ->
+        Menu.save menu
+
     $scope.menu = Menu.currentMenu
 
     currentIndex = 0;

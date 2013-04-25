@@ -18,6 +18,7 @@ class Menu(Base):
     id = Column(Integer, primary_key=True)
     parent_id = Column(Integer, ForeignKey('menus.id'))
     name = Column(String(64))
+    about = Column(Text)
 
     children = relationship("Menu",
                           backref=backref("parent", remote_side=[id])
@@ -33,6 +34,7 @@ class Menu(Base):
             'id': self.id,
             'parent_id': self.parent_id,
             'name': self.name,
+            'about': self.about,
             'cards_len': len(self.cards)
         }
 
@@ -48,8 +50,9 @@ class Card(Base):
     about = Column(Text)
     image = Column(String(128))
 
-    def __init__(self, name):
+    def __init__(self, name, **kwargs):
         self.name = name
+        self.about = kwargs.get('about', None)
 
     def json(self):
         """Turn entity into json-ready object"""

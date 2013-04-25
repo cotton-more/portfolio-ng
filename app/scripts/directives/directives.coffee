@@ -6,7 +6,7 @@ angular.module('portfolioNgApp')
             <div>
                 <h3>{{card.name}}</h3>
                 <img src="http://placehold.it/600x480/&text={{card.name}}" class="img-rounded img-polaroid">
-                <div ng-show="card.about">{{card.about}}</div>
+                <div ng-show="card.about" class="text-left">{{card.about}}</div>
             </div>
         """
         niCard =
@@ -38,20 +38,8 @@ angular.module('portfolioNgApp')
         selectMenuElement = (item) ->
             Menu.currentMenu = item
 
-        cardsTemplate = '<a ng-href="#!/menu/{{item.id}}/cards" ng-click="select(item)">{{item.name}}</a>'
-        noCardsTemplate = '<span class="muted" ng-click="select(item)">{{item.name}}</span>'
-
         linker = (scope, elm, attrs, ctrl) ->
             scope.select = selectMenuElement
-
-            if scope.item.cards_len
-                template = cardsTemplate
-            else
-                template = noCardsTemplate
-
-            elm.html template
-
-            $compile(elm.contents())(scope)
 
             if scope.item.children.length
                 childitem = $compile('<!-- directive: ni-menu item.children -->')(scope)
@@ -60,7 +48,7 @@ angular.module('portfolioNgApp')
         niMenuItem =
             restrict: 'M'
             replace: true
-            template: '<div></div>'
+            template: '<span><a ng-href="#!/menu/{{item.id}}/cards" ng-click="select(item)">{{item.name}}</a></span>'
             link: linker
 
         niMenuItem

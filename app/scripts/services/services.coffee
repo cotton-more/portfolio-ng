@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portfolioNgApp')
-    .factory 'Menu', ['$resource', '$rootScope', ($resource, $rootScope) ->
+    .factory 'Menu', ['$resource', '$http', '$rootScope', ($resource, $http, $rootScope) ->
         keepGoing = true
         tree = []
         menu = []
@@ -27,12 +27,14 @@ angular.module('portfolioNgApp')
         MenuService.getTree = () =>
             return tree if tree.length
 
-            uri = 'http://localhost\\:8000/menu/list'
+            uri = 'http://localhost\\:8000/menu/:action'
             $resource(
                 uri,
                 {callback: 'JSON_CALLBACK'},
                 query: {method: 'JSONP', isArray: true}
-            ).query (data) =>
+                update:
+                    method: 'JSONP'
+            ).query {action: 'list'}, (data) =>
                 menu = data
                 angular.forEach data, (item) =>
                     item.children = []
@@ -58,6 +60,12 @@ angular.module('portfolioNgApp')
                 {callback: 'JSON_CALLBACK'},
                 query: {method: 'JSONP', isArray: true}
             ).query {menuId: menuId}, callback
+
+        MenuService.save = (menu) ->
+            menuId = menu.id
+            $http.jsonp 'http://localhost\\:8000/menu/:id/save', 
+                id: 'test'
+                params: menu
 
         MenuService
     ]
