@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('portfolioNgApp')
-    .directive 'niCard', ['$compile', ($compile) ->
+    .directive 'niCard', [ ->
         template = """
             <div>
                 <h3>{{card.name}}</h3>
@@ -39,7 +39,7 @@ angular.module('portfolioNgApp')
             Menu.currentMenu = item
 
         cardsTemplate = '<a ng-href="#!/menu/{{item.id}}/cards" ng-click="select(item)">{{item.name}}</a>'
-        noCardsTemplate = '<span ng-click="select(item)">{{item.name}}</span>'
+        noCardsTemplate = '<span class="muted" ng-click="select(item)">{{item.name}}</span>'
 
         linker = (scope, elm, attrs, ctrl) ->
             scope.select = selectMenuElement
@@ -58,7 +58,7 @@ angular.module('portfolioNgApp')
                 elm.append childitem
 
         niMenuItem =
-            restrict: 'ME'
+            restrict: 'M'
             replace: true
             template: '<div></div>'
             link: linker
