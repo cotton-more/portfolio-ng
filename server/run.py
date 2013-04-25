@@ -27,6 +27,8 @@ plugin = sqlalchemy.Plugin(
     initdatabase.models.Base
 )
 
+from sqlalchemy.orm import joinedload
+
 app = Bottle()
 app.install(plugin)
 
@@ -44,13 +46,12 @@ def menu_list(db):
     Return json representation of data
     """
     callback = request.query.callback
-    q = db.query(Menu).order_by(Menu.parent_id)
+    q = db.query(Menu).\
+            options(joinedload('cards')).\
+            order_by(Menu.parent_id)
 
     response.content_type = 'text/javascript'
     menu = [e.json() for e in q.all()]
-
-    #from random import shuffle
-    #shuffle(menu)
 
     return "%s(%s)" % (callback, jsonify(menu))
 

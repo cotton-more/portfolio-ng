@@ -1,6 +1,10 @@
 <h1 ng-show="menu.name">"{{menu.name}}"</h1>
-<div class="card" data-ng-repeat="card in cards">
-    <div class="test">
+<div class="current-card">
     <!-- directive: ni-card card -->
-    </div>
+</div>
+<div>
+    <ul class="pager">
+        <li ng-class="{disabled: isLinkDisabled('previous')}"><a ng-click="showPrevious()">Previous</a></li>
+        <li ng-class="{disabled: isLinkDisabled('next')}"><a ng-click="showNext()">Next</a></li>
+    </ul>
 </div>

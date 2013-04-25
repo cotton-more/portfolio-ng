@@ -10,6 +10,7 @@ angular.module('portfolioNgApp')
             currentMenu: false
 
         TREE_LOADED = 'treeLoaded'
+        CARDS_LOADED = 'cardsLoaded'
 
         pushChild = (item, to = tree) ->
             if item.parent_id is null
@@ -42,14 +43,21 @@ angular.module('portfolioNgApp')
 
         MenuService.onMenuLoaded = ($scope, handle) ->
             $scope.$on TREE_LOADED, (event, message) ->
-                handle(message)
+                handle message
 
-        MenuService.getCards = (menuId) ->
+        MenuService.onCardsLoaded = ($scope, handle) ->
+            $scope.$on CARDS_LOADED, (event, message) ->
+                handle message
+
+        MenuService.getCards = (menuId, callback) ->
+            if not angular.isFunction callback
+                callback = angular.noop
+
             $resource(
                 'http://localhost\\:8000/get_cards/:menuId',
                 {callback: 'JSON_CALLBACK'},
                 query: {method: 'JSONP', isArray: true}
-            ).query {menuId: menuId}
+            ).query {menuId: menuId}, callback
 
         MenuService
     ]

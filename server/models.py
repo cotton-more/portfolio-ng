@@ -32,7 +32,8 @@ class Menu(Base):
         return {
             'id': self.id,
             'parent_id': self.parent_id,
-            'name': self.name
+            'name': self.name,
+            'cards_len': len(self.cards)
         }
 
     def __repr__(self):
