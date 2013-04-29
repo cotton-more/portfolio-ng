@@ -3,18 +3,22 @@
 angular.module('portfolioNgApp')
     .directive 'niCard', [ ->
         template = """
-            <div>
-                <h3>{{card.name}}</h3>
-                <img src="http://placehold.it/600x480/&text={{card.name}}" class="img-rounded img-polaroid">
-                <div ng-show="card.about" class="text-left">{{card.about}}</div>
-            </div>
+        <div class="card">
+            <h3 class="title">{{card.name}}</h3>
+            <img src="http://placehold.it/600x480/&text={{card.name}}">
+            <p class="about">{{card.about}}</p>
+        </div>
         """
         niCard =
             restrict: 'M'
             replace: true
-            scope:
-                card: '=niCard'
             template: template
+            link: (scope, element, attrs) ->
+                if scope.$last
+                    Foundation.libs.orbit.init $('#cards-list'), {
+                        bullets: off
+                        slide_number: off
+                    }
     ]
 
 angular.module('portfolioNgApp')

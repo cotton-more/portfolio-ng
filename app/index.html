@@ -10,9 +10,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="stylesheet" href="styles/bootstrap.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/foundation.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="components/custom.modernizr.js"></script>
   </head>
   <body ng-app="portfolioNgApp">
     <!--[if lt IE 7]>
@@ -26,25 +27,30 @@
 
     <!-- Add your site or application content here -->
 
-    <div class="container">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a href="#" class="brand">Title</a>
-                <ul class="nav">
-                  <li><a href="/">Home</a></li>
-                  <li class="active"><a href="/portfolio">Portfolio</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <nav class="top-bar">
+      <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+          <h1><a href="#">Top Bar Title </a></h1>
+        </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
 
-    <div class="container">
-        <div class="row">
-            <div class="span9" ng-view></div>
-            <div class="span3 project-list" ng-controller="MenuCtrl">
-                <h2>Project list:</h2>
-                <!-- directive: ni-menu tree -->
-            </div>
+      <section class="top-bar-section">
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Portfolio</a></li>
+        </ul>
+      </section>
+    </nav>
+
+    <div class="row">
+        <div class="large-9 columns" ng-view></div>
+        <div class="large-3 columns project-list" ng-controller="MenuCtrl">
+            <h2>Project list:</h2>
+            <!-- directive: ni-menu tree -->
         </div>
     </div>
 
@@ -52,6 +58,17 @@
     <script src="components/angular-resource/angular-resource.js"></script>
     <script src="components/angular-cookies/angular-cookies.js"></script>
     <script src="components/angular-sanitize/angular-sanitize.js"></script>
+
+    <script>
+      document.write('<script src=' +
+      ('__proto__' in {} ? 'components/zepto' : 'components/jquery') +
+      '.js><\/script>')
+    </script>
+    <script src="components/foundation.min.js"></script>
+
+    <script>
+        $(document).foundation();
+    </script>
 
     <!-- build:js(.tmp) scripts/scripts.js -->
     <script src="scripts/app.js"></script>

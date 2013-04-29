@@ -1,16 +1,21 @@
 <h1 ng-hide="isInEditMode()" ng-click="editMode()">"{{menu.name}}"</h1>
-<div class="input-append" ng-show="isInEditMode()">
-    <input type="text" class="span2" ng-model="menu.name">
-    <button class="btn" ng-click="save(menu)"><i class="icon icon-ok"></i></button>
-    <button class="btn" ng-click="viewMode()">cancel</button>
+<div class="input-append row collapse" ng-show="isInEditMode()">
+    <div class="small-10 columns">
+        <input type="text" ng-model="menu.name">
+    </div>
+    <div class="small-1 columns">
+        <button class="button prefix" ng-click="save(menu)">ok</button>
+    </div>
+    <div class="small-1 columns">
+        <button class="button prefix" ng-click="viewMode()">cancel</button>
+    </div>
 </div>
 <p>{{menu.about}}</p>
-<div class="current-card" ng-show="menu.cards_len">
-    <!-- directive: ni-card card -->
-    <div>
-        <ul class="pager">
-            <li ng-class="{disabled: isLinkDisabled('previous')}"><a ng-click="showPrevious()">Previous</a></li>
-            <li ng-class="{disabled: isLinkDisabled('next')}"><a ng-click="showNext()">Next</a></li>
-        </ul>
-    </div>
+<hr>
+<div id="cards-list" ng-show="menu.cards_len">
+    <ul data-orbit="">
+        <li ng-repeat="card in cards">
+        <!-- directive: ni-card card -->
+        </li>
+    </ul>
 </div>

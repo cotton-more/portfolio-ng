@@ -46,9 +46,7 @@ CardListCtrl = ($scope, $routeParams, Menu) ->
     currentIndex = 0;
     total = false
 
-    cards = Menu.getCards menuId, (cards) ->
-        total = cards.length - 1
-        $scope.card = cards[currentIndex]
+    $scope.cards = Menu.getCards menuId
 
     $scope.isLinkDisabled = (direction) ->
         result = false
