@@ -8,7 +8,16 @@ import models
 
 from loremipsum import get_sentence, get_paragraph
 
-engine = create_engine('sqlite:///:memory:', echo=True)
+import os
+
+database = os.path.abspath( os.path.dirname(__file__) + '/../data/portfolio.db' )
+if os.path.exists(database):
+    os.unlink(database)
+
+engine = create_engine(
+    'sqlite:///%s' % database,
+    echo=True
+)
 Session = sessionmaker(bind=engine)
 session = Session()
 
