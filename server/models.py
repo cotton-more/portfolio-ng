@@ -12,6 +12,18 @@ def jsonify(dataset):
     import json
     return json.dumps(dataset, sort_keys=True, indent=4)
 
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String(64), unique=True)
+    password = Column(String(64))
+    fullname = Column(String(64))
+    role = Column(String(16), default='guest')
+
+    def __repr__(self):
+        return '<User(%s, %s)>' % (self.username, self.role)
+
 class Menu(Base):
     __tablename__ = 'menus'
 

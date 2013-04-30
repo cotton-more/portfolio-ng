@@ -24,6 +24,13 @@ session = Session()
 def run():
     models.Base.metadata.create_all(bind=engine)
 
+    admin = models.User(username='admin', password='admin', role='admin')
+    session.add(admin)
+    guest = models.User(username='guest', password='guest')
+    session.add(guest)
+
+    session.commit()
+
     menu = models.Menu(name='test-0')
     menu.children = [
         models.Menu(name='test-0-1', about=get_paragraph()),
