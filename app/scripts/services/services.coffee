@@ -1,6 +1,26 @@
 'use strict';
 
 angular.module('portfolioNgApp')
+    .factory 'User', ['$http', '$rootScope', ($http, $rootScope) ->
+
+        authToken = null
+        isAuthenticated = false
+
+        User = {}
+
+        User.getEmail = ->
+            'vansanblch@gmail.com'
+
+        User.isAuthenticated = ->
+            return isAuthenticated
+
+        User.login = ->
+            $http.post
+
+        User
+    ]
+
+angular.module('portfolioNgApp')
     .factory 'Menu', ['$resource', '$http', '$rootScope', ($resource, $http, $rootScope) ->
         keepGoing = true
         tree = []

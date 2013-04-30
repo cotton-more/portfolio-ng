@@ -1,6 +1,34 @@
 'use strict'
 
 angular.module('portfolioNgApp')
+    .directive 'niPersonaAuth', ['User', (User) ->
+
+        verifyAssertion = ->
+            console.log 'verifyAssertion', arguments
+
+        navigator.id.watch
+            loggedInUser: User.getEmail()
+            onlogin: verifyAssertion
+            onlogout: ->
+
+        template = '<span ng-click="request()">persona</span>'
+
+        niPersonaAuth = {}
+
+        niPersonaAuth.template = template
+        niPersonaAuth.restrict = 'M'
+        niPersonaAuth.replace = true
+
+        request_ = ->
+            navigator.id.request()
+
+        niPersonaAuth.link = (scope, element, attrs) ->
+            scope.request = request_
+
+        niPersonaAuth
+    ]
+
+angular.module('portfolioNgApp')
     .directive 'niCard', [ ->
         template = """
         <div class="card">
