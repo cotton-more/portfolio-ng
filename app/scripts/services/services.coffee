@@ -51,12 +51,12 @@ angular.module('portfolioNgApp')
             $resource(
                 uri,
                 {callback: 'JSON_CALLBACK'},
-                query: {method: 'JSONP', isArray: true}
+                query: {method: 'JSONP'}
                 update:
                     method: 'JSONP'
             ).query {action: 'list'}, (data) =>
-                menu = data
-                angular.forEach data, (item) =>
+                menu = data.result
+                angular.forEach data.result, (item) =>
                     item.children = []
                     keepGoing = true
                     pushChild item
@@ -78,7 +78,7 @@ angular.module('portfolioNgApp')
             $resource(
                 'http://localhost\\:8000/get_cards/:menuId',
                 {callback: 'JSON_CALLBACK'},
-                query: {method: 'JSONP', isArray: true}
+                query: {method: 'JSONP'}
             ).query {menuId: menuId}, callback
 
         MenuService.save = (menu) ->
