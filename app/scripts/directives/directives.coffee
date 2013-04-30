@@ -15,7 +15,7 @@ angular.module('portfolioNgApp')
             template: template
             link: (scope, element, attrs) ->
                 if scope.$last
-                    Foundation.libs.orbit.init $('#cards-list'), {
+                    $('#cards-list').foundation 'orbit', {
                         bullets: off
                         slide_number: off
                     }
