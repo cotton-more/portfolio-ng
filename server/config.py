@@ -2,3 +2,6 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'portfolio.db')
+SQLALCHEMY_ECHO = True
+
+ADMIN_EMAIL = 'vansanblch@gmail.com'
