@@ -1,29 +1,36 @@
 'use strict'
 
 angular.module('portfolioNgApp')
-    .directive 'niPersonaAuth', ['User', (User) ->
+    .directive 'niPersonaAuth', ['Persona', '$compile', (Persona, $compile) ->
 
-        verifyAssertion = ->
-            console.log 'verifyAssertion', arguments
+        authTmpl = '<a><img class="persona" ng-click="request()" src="images/plain_sign_in_black.png"></a>'
+        userTmpl = """
+            <a>{{email}} <span ng-click="signout()" class="button">Sign out</span></a>
+        """
 
-        navigator.id.watch
-            loggedInUser: User.getEmail()
-            onlogin: verifyAssertion
-            onlogout: ->
+        niPersonaAuth =
+            template: '<li class="persona"><a>Persona</a></li>'
+            restrict: 'M'
+            replace: true
 
-        template = '<span ng-click="request()">persona</span>'
-
-        niPersonaAuth = {}
-
-        niPersonaAuth.template = template
-        niPersonaAuth.restrict = 'M'
-        niPersonaAuth.replace = true
-
-        request_ = ->
-            navigator.id.request()
 
         niPersonaAuth.link = (scope, element, attrs) ->
-            scope.request = request_
+            scope.request = ->
+                Persona.request()
+
+            scope.signout = ->
+                Persona.signout()
+
+            Persona.onStatus scope, (message) ->
+                if message.email
+                    scope.email = message.email
+                    template = userTmpl
+                else
+                    template = authTmpl
+
+                element.html template
+
+                $compile(element.contents())(scope)
 
         niPersonaAuth
     ]

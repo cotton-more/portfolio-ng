@@ -1,4 +1,62 @@
-'use strict';
+# vim: set ts=4 sw=4 sts=4:
+'use strict'
+
+angular.module('portfolioNgApp')
+    .factory 'Persona', ['$http','$rootScope', ($http, $rootScope) ->
+        STATUS = 'Email of logged in user'
+
+        _email = undefined
+
+        _status = ->
+            console.log '_status'
+            $http.jsonp('http://localhost:8000/auth/email?callback=JSON_CALLBACK')
+                .success (data)->
+                    console.log 'get email', data
+                    $rootScope.$broadcast STATUS, data
+                    navigator.id.watch
+                        loggedInUser: data.email
+                        onlogin: (assertion) ->
+                            console.log 'onlogin'
+                            $http.jsonp('http://localhost:8000/auth/login',
+                                params:
+                                    callback: 'JSON_CALLBACK'
+                                    assertion: assertion
+                            ).success (data)->
+                                console.log 'verifyAssertion.success', data
+                                $rootScope.$broadcast STATUS, data
+                        onlogout: ->
+                            console.log 'onlogout'
+                            $http.jsonp('http://localhost:8000/auth/logout?callback=JSON_CALLBACK')
+                                .success (data)->
+                                    console.log 'auth/logout', data
+                                    $rootScope.$broadcast STATUS, data
+
+
+        Persona = {}
+
+        Persona.onStatus = ($scope, handle) ->
+            console.log 'Persona.onStatus', arguments
+
+            $scope.$on STATUS, (event, message) ->
+                console.log 'Persona.onStatus.$on', arguments
+                _email = message.email
+                handle message
+
+            _status()
+
+        Persona.request = ->
+            console.log 'request'
+            navigator.id.request()
+
+        Persona.signout = ->
+            console.log 'signout'
+            navigator.id.logout()
+
+        Persona.email = ->
+            _email
+
+        Persona
+    ]
 
 angular.module('portfolioNgApp')
     .factory 'User', ['$http', '$rootScope', ($http, $rootScope) ->
@@ -60,7 +118,7 @@ angular.module('portfolioNgApp')
                     item.children = []
                     keepGoing = true
                     pushChild item
-                $rootScope.$broadcast(TREE_LOADED, menu);
+                $rootScope.$broadcast(TREE_LOADED, menu)
             tree
 
         MenuService.onMenuLoaded = ($scope, handle) ->
