@@ -39,9 +39,9 @@ angular.module('portfolioNgApp')
     .directive 'niCard', [ ->
         template = """
         <div class="card">
-            <h3 class="title">{{card.name}}</h3>
+            <h4 class="title">{{card.name}}</h4>
             <img src="http://placehold.it/600x480/&text={{card.name}}">
-            <p class="about">{{card.about}}</p>
+            <p>{{card.about}}</p>
         </div>
         """
         niCard =
