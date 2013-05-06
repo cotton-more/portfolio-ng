@@ -1,5 +1,7 @@
 Flask
-Flask-SQLAlchemy
+flask-login
+alembic
 SQLAlchemy
+Flask-SQLAlchemy
 Jinja2
 requests
