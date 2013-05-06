@@ -1,23 +1,19 @@
 from app import db
+from flask.ext.login import UserMixin
 
-class User(db.Model):
+ROLE_ADMIN = 'admin'
+ROLE_GUEST = 'guest'
+
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(64))
-    fullname = db.Column(db.String(64))
-    role = db.Column(db.String(16), default='guest')
+    email = db.Column(db.String(128))
+    role = db.Column(db.String(128), unique=True, default=ROLE_GUEST)
 
     def __repr__(self):
-        return '<User(%s, %s)>' % (self.username, self.role)
+        return "<User(%s, %s)>" % (self.email, self.role)
 
-    def json(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'fullname': self.fullname
-        }
 
 class Menu(db.Model):
     __tablename__ = 'menus'
@@ -47,6 +43,7 @@ class Menu(db.Model):
 
     def __repr__(self):
         return "<Menu(%s, %s)>" % (self.id, self.name)
+
 
 class Card(db.Model):
     __tablename__ = 'cards'
